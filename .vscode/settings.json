@@ -1,0 +1,9 @@
+{
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "cSpell.words": [
+    "fontawesome",
+    "fortawesome",
+    "Pressable"
+  ],
+  "java.compile.nullAnalysis.mode": "automatic"
+}
