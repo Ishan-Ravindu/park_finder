@@ -3,7 +3,7 @@ import MobileNumberSelection from '../components/MobileNumber';
 
 function RegisterMobileNumber(): JSX.Element {
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.title}>Enter your mobile number</Text>
       <MobileNumberSelection />
     </View>
@@ -11,9 +11,14 @@ function RegisterMobileNumber(): JSX.Element {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#1A1A1A',
+  },
   title: {
     fontSize: 30,
     fontWeight: '500',
+    color:"#EDF6FF"
   },
 });
 

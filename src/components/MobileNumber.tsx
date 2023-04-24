@@ -21,11 +21,12 @@ function MobileNumberSelection(): JSX.Element {
         style={styles.flagContainer}
         onPress={() => setModalVisible(true)}>
         <Text style={styles.flag}>{selectedCountry.flag}</Text>
-        <FontAwesomeIcon icon={faAngleDown} style={{color: '#ffffff'}} />
+        <FontAwesomeIcon icon={faAngleDown} style={{color: '#EDF6FF'}} />
       </Pressable>
       <Text style={styles.countryCode}>{selectedCountry.mobile_code}</Text>
       <MainTextInput
         style={styles.mobileNumber}
+        placeholderTextColor={"#979797"}
         value={mobileNumber}
         placeholder="Mobile Number"
         onChangeText={text => setMobileNumber(text)}
@@ -76,9 +77,11 @@ const styles = StyleSheet.create({
   },
   countryCode: {
     fontSize: 24,
+    color:"#EDF6FF"
   },
   mobileNumber: {
     width: 200,
+    color:"#EDF6FF",
   },
   modalContainer: {
     position: 'absolute',

@@ -1,26 +1,15 @@
-import {StyleProp, StyleSheet, TextInput, TextStyle} from 'react-native';
+import {StyleProp, StyleSheet, TextInput, TextInputProps, TextStyle} from 'react-native';
 
-interface props {
+interface props extends TextInputProps {
   style?: StyleProp<TextStyle>;
-  placeholder?: string;
-  value: string;
-  onChangeText: (text: string) => void;
 }
-
-function MainTextInput({
-  style,
-  placeholder,
-  value,
-  onChangeText,
-}: props): JSX.Element {
-  return (
-    <TextInput
-      style={[styles.input, style]}
-      placeholder={placeholder}
-      value={value}
-      onChangeText={onChangeText}
-    />
-  );
+const MainTextInput: React.FC<props> =({style,...other}): JSX.Element => {
+  return(
+  <TextInput
+  style={[styles.input, style]}
+  {...other}
+/>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -28,7 +17,6 @@ const styles = StyleSheet.create({
     width: '100%',
     borderBottomWidth: 1,
     borderColor: '#979797',
-    color: '#979797',
     fontSize: 24,
   },
 });
