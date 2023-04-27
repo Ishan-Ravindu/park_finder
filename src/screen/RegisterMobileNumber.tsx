@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet} from 'react-native';
-import MobileNumberSelection from '../components/MobileNumber';
+import MobileNumberSelection from '../components/MobileNumberSelection';
 
 function RegisterMobileNumber(): JSX.Element {
   return (
