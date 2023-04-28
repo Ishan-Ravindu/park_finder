@@ -1,6 +1,6 @@
 import React from 'react';
 import {StatusBar} from 'react-native';
-import ValidateOTP from './src/screen/ValidataOTP';
+import ValidateOTP from './src/screen/ValidateOTP';
 import RegisterMobileNumber from './src/screen/RegisterMobileNumber';
 import Welcome from './src/screen/Welcome';
 import GetUserDetails from './src/screen/GetUserDetails';
