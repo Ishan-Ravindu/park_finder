@@ -4,6 +4,7 @@ import ValidateOTP from './src/screen/ValidataOTP';
 import RegisterMobileNumber from './src/screen/RegisterMobileNumber';
 import Welcome from './src/screen/Welcome';
 import GetUserDetails from './src/screen/GetUserDetails';
+import SetUserAvatar from './src/screen/SetUserAvatar';
 
 function App(): JSX.Element {
   return (
@@ -12,7 +13,8 @@ function App(): JSX.Element {
       {/* <Welcome /> */}
       {/* <RegisterMobileNumber /> */}
       {/* <ValidateOTP mobileNumber='+94 75549689'/> */}
-      <GetUserDetails/>
+      {/* <GetUserDetails/> */}
+      <SetUserAvatar/>
     </>
   );
 }
