@@ -1,6 +1,7 @@
 import { StyleSheet, View } from "react-native"
 import {faUser} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import { SECONDARY_BACKGROUND_COLOR } from "../utils/colors";
 
 const Avatar = ()=>{
     return(
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
         width:140,
         height:140,
         borderRadius:70,
-        backgroundColor:"#C4C4C4"
+        backgroundColor:SECONDARY_BACKGROUND_COLOR
     }
 })
 

@@ -1,5 +1,6 @@
 import {View, Text, StyleSheet} from 'react-native';
 import MobileNumberSelection from '../components/MobileNumberSelection';
+import { PRIMARY_BACKGROUND_COLOR, PRIMARY_TEXT_COLOR } from '../utils/colors';
 
 function RegisterMobileNumber(): JSX.Element {
   return (
@@ -13,12 +14,12 @@ function RegisterMobileNumber(): JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1A1A1A',
+    backgroundColor: PRIMARY_BACKGROUND_COLOR,
   },
   title: {
     fontSize: 30,
     fontWeight: '500',
-    color:"#EDF6FF"
+    color:PRIMARY_TEXT_COLOR
   },
 });
 

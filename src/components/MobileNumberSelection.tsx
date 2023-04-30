@@ -4,6 +4,7 @@ import {faAngleDown} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import MainTextInput from './MainTextInput';
 import countries from '../data/countries.json';
+import { PLACEHOLDER_TEXT_COLOR, PRIMARY_ICON_COLOR, PRIMARY_TEXT_COLOR } from '../utils/colors';
 
 function MobileNumberSelection(): JSX.Element {
   const [mobileNumber, setMobileNumber] = useState<string>('');
@@ -21,12 +22,12 @@ function MobileNumberSelection(): JSX.Element {
         style={styles.flagContainer}
         onPress={() => setModalVisible(true)}>
         <Text style={styles.flag}>{selectedCountry.flag}</Text>
-        <FontAwesomeIcon icon={faAngleDown} style={{color: '#EDF6FF'}} />
+        <FontAwesomeIcon icon={faAngleDown} color={PRIMARY_ICON_COLOR} />
       </Pressable>
       <Text style={styles.countryCode}>{selectedCountry.mobile_code}</Text>
       <MainTextInput
         style={styles.mobileNumber}
-        placeholderTextColor={"#979797"}
+        placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
         value={mobileNumber}
         placeholder="Mobile Number"
         onChangeText={text => setMobileNumber(text)}
@@ -77,11 +78,11 @@ const styles = StyleSheet.create({
   },
   countryCode: {
     fontSize: 24,
-    color:"#EDF6FF"
+    color:PRIMARY_TEXT_COLOR
   },
   mobileNumber: {
     width: 200,
-    color:"#EDF6FF",
+    color:PRIMARY_TEXT_COLOR,
   },
   modalContainer: {
     position: 'absolute',

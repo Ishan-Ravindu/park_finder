@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native"
 import Avatar from "../components/Avatar";
+import { PRIMARY_BACKGROUND_COLOR, PRIMARY_TEXT_COLOR } from "../utils/colors";
 
 const SetUserAvatar = ()=>{
     return(
@@ -15,12 +16,12 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:"center",
         alignItems:"center",
-        backgroundColor:"#1A1A1A",
+        backgroundColor:PRIMARY_BACKGROUND_COLOR,
         gap:50
     },
     text:{
         fontSize:20,
-        color:"#EDF6FF"
+        color:PRIMARY_TEXT_COLOR
     }
 })
 

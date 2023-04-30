@@ -1,4 +1,5 @@
 import {StyleProp, StyleSheet, TextInput, TextInputProps, TextStyle} from 'react-native';
+import { PRIMARY_BORDER_COLOR } from '../utils/colors';
 
 interface props extends TextInputProps {
   style?: StyleProp<TextStyle>;
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
   input: {
     width: '100%',
     borderBottomWidth: 1,
-    borderColor: '#979797',
+    borderColor: PRIMARY_BORDER_COLOR,
     fontSize: 24,
   },
 });
