@@ -12,6 +12,11 @@
   export const PRIMARY_ICON_COLOR = '#EDF6FF';
 
   export const PRIMARY_GRADIENT_COLOR = {
+    COLOR_1 :"#000000",
+    COLOR_2:"#000000",
+    COLOR_3:"#000000"
+  }  
+  export const SECONDARY_GRADIENT_COLOR = {
     COLOR_1 :"#1976D2",
     COLOR_2:"#3867EA",
     COLOR_3:"#535AFF"
