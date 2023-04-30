@@ -1,5 +1,5 @@
 import {StyleProp, StyleSheet, TextInput, TextInputProps, TextStyle} from 'react-native';
-import { PRIMARY_BORDER_COLOR } from '../utils/colors';
+import { PRIMARY_BORDER_COLOR } from '../styles/colors';
 
 interface props extends TextInputProps {
   style?: StyleProp<TextStyle>;

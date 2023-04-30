@@ -4,7 +4,7 @@ import {faAngleDown} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import MainTextInput from './MainTextInput';
 import countries from '../data/countries.json';
-import { PLACEHOLDER_TEXT_COLOR, PRIMARY_ICON_COLOR, PRIMARY_TEXT_COLOR } from '../utils/colors';
+import { PLACEHOLDER_TEXT_COLOR, PRIMARY_ICON_COLOR, PRIMARY_TEXT_COLOR } from '../styles/colors';
 
 function MobileNumberSelection(): JSX.Element {
   const [mobileNumber, setMobileNumber] = useState<string>('');

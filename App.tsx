@@ -10,11 +10,11 @@ function App(): JSX.Element {
   return (
     <>
       <StatusBar backgroundColor="#000000" />
-      <Welcome />
+      {/* <Welcome /> */}
       {/* <RegisterMobileNumber /> */}
       {/* <ValidateOTP mobileNumber='+94 75549689'/> */}
       {/* <GetUserDetails/> */}
-      {/* <SetUserAvatar/> */}
+      <SetUserAvatar/>
     </>
   );
 }

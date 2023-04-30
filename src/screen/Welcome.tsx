@@ -2,9 +2,10 @@ import {Image, StyleSheet,View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Badge from '../components/Badge';
 import Button from '../components/Button';
-import { PRIMARY_ICON_COLOR, SECONDARY_GRADIENT_COLOR } from '../utils/colors';
+import { PRIMARY_ICON_COLOR, SECONDARY_GRADIENT_COLOR } from '../styles/colors';
 import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { BOTTOM_BUTTON_BOTTOM } from '../styles/positions';
 
 function Welcome(): JSX.Element {
   return (
@@ -45,7 +46,7 @@ const style = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    bottom: 62,
+    bottom: BOTTOM_BUTTON_BOTTOM,
   },
 });
 

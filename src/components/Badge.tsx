@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faShield} from '@fortawesome/free-solid-svg-icons/faShield';
-import { PRIMARY_ICON_COLOR, SECONDARY_BORDER_COLOR } from '../utils/colors';
+import { PRIMARY_ICON_COLOR, SECONDARY_BORDER_COLOR } from '../styles/colors';
 
 function Badge(): JSX.Element {
   return (

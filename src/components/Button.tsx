@@ -1,6 +1,6 @@
 import {StyleSheet, Pressable, Text} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { PRIMARY_GRADIENT_COLOR, PRIMARY_TEXT_COLOR } from '../utils/colors';
+import { PRIMARY_GRADIENT_COLOR, PRIMARY_TEXT_COLOR } from '../styles/colors';
 import React, { ReactNode } from 'react';
 
 interface props{
