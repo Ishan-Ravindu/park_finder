@@ -5,15 +5,11 @@ import { HINT_TEXT_COLOR, PLACEHOLDER_TEXT_COLOR, PRIMARY_BACKGROUND_COLOR, PRIM
 import Button from "../components/Button";
 import { BOTTOM_BUTTON_BOTTOM, BOTTOM_BUTTON_LEFT } from "../styles/positions";
 
-interface props {
-    mobileNumber: string
-}
-
-const ValidateOTP: React.FC<props> = ({ mobileNumber }) => {
+const ValidateOTP = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Enter the 4-digit code sent to you at </Text>
-            <Text style={styles.mobileNumber}>{mobileNumber}</Text>
+            <Text style={styles.mobileNumber}>+94 758964855</Text>
             <View style={styles.inputContainer}>
                 <MainTextInput placeholder="0" placeholderTextColor={PLACEHOLDER_TEXT_COLOR} style={styles.input} />
                 <MainTextInput placeholder="0" placeholderTextColor={PLACEHOLDER_TEXT_COLOR} style={styles.input} />
