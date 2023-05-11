@@ -5,14 +5,11 @@ import Button from '../components/Button';
 import {PRIMARY_ICON_COLOR, SECONDARY_GRADIENT_COLOR} from '../styles/colors';
 import {faArrowRightLong} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {RootStackParamList} from '../../App';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {WelcomeStackProps} from '../navigation/types';
 
-type WelcomeProps = {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'Welcome'>;
-};
-
-const Welcome: React.FC<WelcomeProps> = ({navigation}: WelcomeProps) => {
+const Welcome: React.FC<WelcomeStackProps> = ({
+  navigation,
+}: WelcomeStackProps) => {
   return (
     <LinearGradient
       colors={[

@@ -6,17 +6,11 @@ import {
   PRIMARY_TEXT_COLOR,
 } from '../styles/colors';
 import Button from '../components/Button';
-import {BOTTOM_BUTTON_BOTTOM, BOTTOM_BUTTON_LEFT} from '../styles/positions';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../App';
+import {GetUserDetailsStackProps} from '../navigation/types';
 
-type GetUserDetailsProps = {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'GetUserDetails'>;
-};
-
-const GetUserDetails: React.FC<GetUserDetailsProps> = ({
+const GetUserDetails: React.FC<GetUserDetailsStackProps> = ({
   navigation,
-}: GetUserDetailsProps) => {
+}: GetUserDetailsStackProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.mainContainer}>

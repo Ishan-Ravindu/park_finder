@@ -11,14 +11,7 @@ import {
   PLACEHOLDER_TEXT_COLOR,
   PRIMARY_BACKGROUND_COLOR,
 } from './src/styles/colors';
-
-export type RootStackParamList = {
-  Welcome: undefined;
-  GetUserDetails: undefined;
-  RegisterMobileNumber: undefined;
-  ValidateOTP: undefined;
-  SetUserAvatar: undefined;
-};
+import {RootStackParamList} from './src/navigation/types';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
