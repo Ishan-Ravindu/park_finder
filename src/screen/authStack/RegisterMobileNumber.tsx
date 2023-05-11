@@ -1,8 +1,11 @@
 import {View, Text, StyleSheet} from 'react-native';
-import MobileNumberSelection from '../components/MobileNumberSelection';
-import {PRIMARY_BACKGROUND_COLOR, PRIMARY_TEXT_COLOR} from '../styles/colors';
-import Button from '../components/Button';
-import {RegisterMobileNumberStackProps} from '../navigation/types';
+import MobileNumberSelection from '../../components/MobileNumberSelection';
+import {
+  PRIMARY_BACKGROUND_COLOR,
+  PRIMARY_TEXT_COLOR,
+} from '../../styles/colors';
+import Button from '../../components/Button';
+import {RegisterMobileNumberStackProps} from '../../navigation/types';
 
 const RegisterMobileNumber: React.FC<RegisterMobileNumberStackProps> = ({
   navigation,

@@ -1,14 +1,14 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import MainTextInput from '../components/MainTextInput';
+import MainTextInput from '../../components/MainTextInput';
 import {
   HINT_TEXT_COLOR,
   PLACEHOLDER_TEXT_COLOR,
   PRIMARY_BACKGROUND_COLOR,
   PRIMARY_TEXT_COLOR,
-} from '../styles/colors';
-import Button from '../components/Button';
-import {ValidateOTPStackProps} from '../navigation/types';
+} from '../../styles/colors';
+import Button from '../../components/Button';
+import {ValidateOTPStackProps} from '../../navigation/types';
 
 const ValidateOTP: React.FC<ValidateOTPStackProps> = ({
   navigation,

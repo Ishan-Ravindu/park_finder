@@ -1,12 +1,12 @@
 import {StyleSheet, Text, View} from 'react-native';
-import MainTextInput from '../components/MainTextInput';
+import MainTextInput from '../../components/MainTextInput';
 import {
   PLACEHOLDER_TEXT_COLOR,
   PRIMARY_BACKGROUND_COLOR,
   PRIMARY_TEXT_COLOR,
-} from '../styles/colors';
-import Button from '../components/Button';
-import {GetUserDetailsStackProps} from '../navigation/types';
+} from '../../styles/colors';
+import Button from '../../components/Button';
+import {GetUserDetailsStackProps} from '../../navigation/types';
 
 const GetUserDetails: React.FC<GetUserDetailsStackProps> = ({
   navigation,

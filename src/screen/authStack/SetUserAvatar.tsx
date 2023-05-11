@@ -1,7 +1,10 @@
 import {StyleSheet, Text, View} from 'react-native';
-import Avatar from '../components/Avatar';
-import {PRIMARY_BACKGROUND_COLOR, PRIMARY_TEXT_COLOR} from '../styles/colors';
-import Button from '../components/Button';
+import Avatar from '../../components/Avatar';
+import {
+  PRIMARY_BACKGROUND_COLOR,
+  PRIMARY_TEXT_COLOR,
+} from '../../styles/colors';
+import Button from '../../components/Button';
 
 const SetUserAvatar = () => {
   return (

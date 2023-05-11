@@ -1,11 +1,14 @@
 import {Image, StyleSheet, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Badge from '../components/Badge';
-import Button from '../components/Button';
-import {PRIMARY_ICON_COLOR, SECONDARY_GRADIENT_COLOR} from '../styles/colors';
+import Badge from '../../components/Badge';
+import Button from '../../components/Button';
+import {
+  PRIMARY_ICON_COLOR,
+  SECONDARY_GRADIENT_COLOR,
+} from '../../styles/colors';
 import {faArrowRightLong} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {WelcomeStackProps} from '../navigation/types';
+import {WelcomeStackProps} from '../../navigation/types';
 
 const Welcome: React.FC<WelcomeStackProps> = ({
   navigation,
@@ -20,7 +23,7 @@ const Welcome: React.FC<WelcomeStackProps> = ({
       style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
-          source={require('../assets/logo.png')}
+          source={require('../../assets/logo.png')}
           style={{width: 180, height: 180}}
         />
         <View style={styles.badgeContainer}>
