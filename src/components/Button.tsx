@@ -1,24 +1,33 @@
 import {StyleSheet, Pressable, Text} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faArrowRightLong} from '@fortawesome/free-solid-svg-icons/faArrowRightLong';
+import {PRIMARY_GRADIENT_COLOR, PRIMARY_TEXT_COLOR} from '../styles/colors';
+import React, {ReactNode} from 'react';
 
-function Button(): JSX.Element {
+interface props extends React.ComponentProps<typeof Pressable> {
+  title: string;
+  icon?: ReactNode;
+  gradientColors?: (string | number)[];
+}
+
+const Button: React.FC<props> = ({
+  title,
+  icon,
+  gradientColors = [
+    PRIMARY_GRADIENT_COLOR.COLOR_1,
+    PRIMARY_GRADIENT_COLOR.COLOR_2,
+    PRIMARY_GRADIENT_COLOR.COLOR_3,
+  ],
+  ...other
+}) => {
   return (
-    <Pressable>
-      <LinearGradient
-        style={style.button}
-        colors={['#1976D2', '#3867EA', '#535AFF']}>
-        <Text style={style.text}>Get Started</Text>
-        <FontAwesomeIcon
-          icon={faArrowRightLong}
-          size={25}
-          style={{color: '#ffffff'}}
-        />
+    <Pressable {...other}>
+      <LinearGradient style={style.button} colors={gradientColors}>
+        <Text style={style.text}>{title}</Text>
+        {icon}
       </LinearGradient>
     </Pressable>
   );
-}
+};
 
 const style = StyleSheet.create({
   button: {
@@ -40,7 +49,7 @@ const style = StyleSheet.create({
   text: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#fff',
+    color: PRIMARY_TEXT_COLOR,
     marginRight: 20,
   },
 });
