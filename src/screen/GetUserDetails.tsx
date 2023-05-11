@@ -19,18 +19,20 @@ const GetUserDetails: React.FC<GetUserDetailsProps> = ({
 }: GetUserDetailsProps) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>What’s your name?</Text>
-      <View style={styles.inputContainer}>
-        <MainTextInput
-          placeholder="First"
-          placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-          style={styles.input}
-        />
-        <MainTextInput
-          placeholder="Last"
-          placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-          style={styles.input}
-        />
+      <View style={styles.mainContainer}>
+        <Text style={styles.title}>What’s your name?</Text>
+        <View style={styles.inputContainer}>
+          <MainTextInput
+            placeholder="First"
+            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+            style={styles.input}
+          />
+          <MainTextInput
+            placeholder="Last"
+            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+            style={styles.input}
+          />
+        </View>
       </View>
       <View style={styles.buttonContainer}>
         <Button
@@ -52,6 +54,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     color: PRIMARY_TEXT_COLOR,
+    marginBottom: 15,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -61,10 +64,14 @@ const styles = StyleSheet.create({
     width: '45%',
     color: PRIMARY_TEXT_COLOR,
   },
+  mainContainer: {
+    flex: 4,
+    paddingHorizontal: 20,
+  },
   buttonContainer: {
-    position: 'absolute',
-    bottom: BOTTOM_BUTTON_BOTTOM,
-    left: BOTTOM_BUTTON_LEFT,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
