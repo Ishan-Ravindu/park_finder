@@ -1,23 +1,18 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import MainTextInput from '../components/MainTextInput';
+import MainTextInput from '../../components/MainTextInput';
 import {
   HINT_TEXT_COLOR,
   PLACEHOLDER_TEXT_COLOR,
   PRIMARY_BACKGROUND_COLOR,
   PRIMARY_TEXT_COLOR,
-} from '../styles/colors';
-import Button from '../components/Button';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../App';
+} from '../../styles/colors';
+import Button from '../../components/Button';
+import {ValidateOTPStackProps} from '../../navigation/types';
 
-type ValidateOTPProps = {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'ValidateOTP'>;
-};
-
-const ValidateOTP: React.FC<ValidateOTPProps> = ({
+const ValidateOTP: React.FC<ValidateOTPStackProps> = ({
   navigation,
-}: ValidateOTPProps) => {
+}: ValidateOTPStackProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.maincontainer}>
