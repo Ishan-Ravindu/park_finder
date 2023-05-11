@@ -8,7 +8,6 @@ import {
   PRIMARY_TEXT_COLOR,
 } from '../styles/colors';
 import Button from '../components/Button';
-import {BOTTOM_BUTTON_BOTTOM, BOTTOM_BUTTON_LEFT} from '../styles/positions';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../App';
 
@@ -21,31 +20,35 @@ const ValidateOTP: React.FC<ValidateOTPProps> = ({
 }: ValidateOTPProps) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Enter the 4-digit code sent to you at </Text>
-      <Text style={styles.mobileNumber}>+94 758964855</Text>
-      <View style={styles.inputContainer}>
-        <MainTextInput
-          placeholder="0"
-          placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-          style={styles.input}
-        />
-        <MainTextInput
-          placeholder="0"
-          placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-          style={styles.input}
-        />
-        <MainTextInput
-          placeholder="0"
-          placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-          style={styles.input}
-        />
-        <MainTextInput
-          placeholder="0"
-          placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-          style={styles.input}
-        />
+      <View style={styles.maincontainer}>
+        <Text style={styles.title}>
+          Enter the 4-digit code sent to you at{'  '}
+          <Text style={styles.mobileNumber}>+94 758964855</Text>
+        </Text>
+        <View style={styles.inputContainer}>
+          <MainTextInput
+            placeholder="0"
+            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+            style={styles.input}
+          />
+          <MainTextInput
+            placeholder="0"
+            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+            style={styles.input}
+          />
+          <MainTextInput
+            placeholder="0"
+            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+            style={styles.input}
+          />
+          <MainTextInput
+            placeholder="0"
+            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+            style={styles.input}
+          />
+        </View>
+        <Text style={styles.resend}>Resend Code</Text>
       </View>
-      <Text style={styles.resend}>Resend Code</Text>
       <View style={styles.buttonContainer}>
         <Button
           onPress={() => {
@@ -66,6 +69,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     color: PRIMARY_TEXT_COLOR,
+    marginBottom: 15,
   },
   mobileNumber: {
     fontSize: 20,
@@ -85,10 +89,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 18,
   },
+  maincontainer: {
+    flex: 4,
+    paddingHorizontal: 20,
+  },
   buttonContainer: {
-    position: 'absolute',
-    bottom: BOTTOM_BUTTON_BOTTOM,
-    left: BOTTOM_BUTTON_LEFT,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
