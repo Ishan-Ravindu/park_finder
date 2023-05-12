@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "49920885363",
+    "project_id": "parkfinder-b40d1",
+    "storage_bucket": "parkfinder-b40d1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49920885363:android:5bf38dad1353fc65c36006",
+        "android_client_info": {
+          "package_name": "com.park_finder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "49920885363-1b1v6inc57duiupn0qa7todmpi7imu2k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.park_finder",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "49920885363-uquljukcspt7grv68pv1h3op2pkces2b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1OV38yZjbupsaG98HR2zYkavuek3wpv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "49920885363-uquljukcspt7grv68pv1h3op2pkces2b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
