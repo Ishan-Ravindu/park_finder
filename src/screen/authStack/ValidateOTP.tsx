@@ -9,48 +9,70 @@ import {
 } from '../../styles/colors';
 import Button from '../../components/Button';
 import {ValidateOTPStackProps} from '../../navigation/types';
+import * as yup from 'yup';
+import {yupResolver} from '@hookform/resolvers/yup';
+import {Controller, useForm} from 'react-hook-form';
+import ErrorMessage from '../../components/ErrorMessage';
+
+const schema = yup.object({
+  otp: yup
+    .string()
+    .matches(/^[0-9]{6}$/, 'Enter six digit')
+    .required('OTP is required'),
+});
+
+type FormData = yup.InferType<typeof schema>;
 
 const ValidateOTP: React.FC<ValidateOTPStackProps> = ({
   navigation,
 }: ValidateOTPStackProps) => {
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      otp: '',
+    },
+  });
+
+  const onSubmit = () => {
+    navigation.push('GetUserDetails');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.mainContainer}>
         <Text style={styles.title}>
-          Enter the 4-digit code sent to you at{'  '}
+          Enter the 6-digit code sent to you at{'  '}
           <Text style={styles.mobileNumber}>+94 758964855</Text>
         </Text>
         <View style={styles.inputContainer}>
-          <MainTextInput
-            placeholder="0"
-            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-            style={styles.input}
-          />
-          <MainTextInput
-            placeholder="0"
-            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-            style={styles.input}
-          />
-          <MainTextInput
-            placeholder="0"
-            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-            style={styles.input}
-          />
-          <MainTextInput
-            placeholder="0"
-            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-            style={styles.input}
+          <Controller
+            control={control}
+            render={({field: {onChange, onBlur, value}}) => (
+              <MainTextInput
+                placeholder="000000"
+                keyboardType="number-pad"
+                placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+                style={styles.input}
+                autoComplete="sms-otp"
+                autoFocus
+                maxLength={6}
+                value={value}
+                onBlur={onBlur}
+                onChangeText={onChange}
+              />
+            )}
+            name="otp"
           />
         </View>
+        {errors.otp?.message && <ErrorMessage message={errors.otp?.message} />}
         <Text style={styles.resend}>Resend Code</Text>
       </View>
       <View style={styles.buttonContainer}>
-        <Button
-          onPress={() => {
-            navigation.push('GetUserDetails');
-          }}
-          title="Next"
-        />
+        <Button onPress={handleSubmit(onSubmit)} title="Next" />
       </View>
     </View>
   );
@@ -75,7 +97,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   input: {
-    width: '15%',
+    width: '30%',
     textAlign: 'center',
     color: PRIMARY_TEXT_COLOR,
   },
