@@ -2,7 +2,7 @@ import {StatusBar} from 'react-native';
 import AuthStack from './src/navigation/AuthStack';
 import {useEffect, useState} from 'react';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import Home from './src/screen/authStack/Home';
+import Home from './src/screen/Home';
 
 function App(): JSX.Element | null {
   const [initializing, setInitializing] = useState(true);
