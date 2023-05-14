@@ -13,6 +13,7 @@ import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {Controller, useForm} from 'react-hook-form';
 import ErrorMessage from '../../components/ErrorMessage';
+import {err} from 'react-native-svg/lib/typescript/xml';
 
 const schema = yup.object({
   otp: yup
@@ -24,6 +25,7 @@ const schema = yup.object({
 type FormData = yup.InferType<typeof schema>;
 
 const ValidateOTP: React.FC<ValidateOTPStackProps> = ({
+  route,
   navigation,
 }: ValidateOTPStackProps) => {
   const {
@@ -37,8 +39,16 @@ const ValidateOTP: React.FC<ValidateOTPStackProps> = ({
     },
   });
 
-  const onSubmit = () => {
-    navigation.push('GetUserDetails');
+  const mobileNumber = route.params.mobileNumber;
+  const confirmationResult = route.params.confirmationResult;
+
+  const onSubmit = async (data: FormData) => {
+    try {
+      await confirmationResult.confirm(data.otp);
+      navigation.push('GetUserDetails');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -46,7 +56,7 @@ const ValidateOTP: React.FC<ValidateOTPStackProps> = ({
       <View style={styles.mainContainer}>
         <Text style={styles.title}>
           Enter the 6-digit code sent to you at{'  '}
-          <Text style={styles.mobileNumber}>+94 758964855</Text>
+          <Text style={styles.mobileNumber}>{mobileNumber}</Text>
         </Text>
         <View style={styles.inputContainer}>
           <Controller

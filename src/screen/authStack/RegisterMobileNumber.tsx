@@ -14,6 +14,7 @@ import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import ErrorMessage from '../../components/ErrorMessage';
+import auth from '@react-native-firebase/auth';
 
 const schema = yup.object({
   mobileNumber: yup
@@ -39,8 +40,18 @@ const RegisterMobileNumber: React.FC<RegisterMobileNumberStackProps> = ({
       mobileNumber: '',
     },
   });
-  const onSubmit = () => {
-    navigation.push('ValidateOTP');
+  const onSubmit = async (data: FormData) => {
+    const fullMobileNumber = `${selectedCountry.mobile_code}${data.mobileNumber}`;
+    try {
+      const confirmation = await auth().signInWithPhoneNumber(fullMobileNumber);
+      console.log(confirmation);
+      navigation.push('ValidateOTP', {
+        mobileNumber: fullMobileNumber,
+        confirmationResult: confirmation,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
