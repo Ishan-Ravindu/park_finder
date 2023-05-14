@@ -10,12 +10,38 @@ import {useState} from 'react';
 import countries from '../../components/CountryCodeSelection/countries';
 import CountryCodeSelection from '../../components/CountryCodeSelection';
 import MainTextInput from '../../components/MainTextInput';
+import {useForm, Controller} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import ErrorMessage from '../../components/ErrorMessage';
+
+const schema = yup.object({
+  mobileNumber: yup
+    .string()
+    .matches(/^[0-9]{9}$/, 'Invalid mobile number')
+    .required('Mobile number is required'),
+});
+
+type FormData = yup.InferType<typeof schema>;
 
 const RegisterMobileNumber: React.FC<RegisterMobileNumberStackProps> = ({
   navigation,
 }: RegisterMobileNumberStackProps) => {
-  const [mobileNumber, setMobileNumber] = useState<string>('');
   const [selectedCountry, setSelectedCountry] = useState(countries[0]);
+
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      mobileNumber: '',
+    },
+  });
+  const onSubmit = () => {
+    navigation.push('ValidateOTP');
+  };
 
   return (
     <View style={styles.container}>
@@ -26,22 +52,31 @@ const RegisterMobileNumber: React.FC<RegisterMobileNumberStackProps> = ({
             selectedCountry={selectedCountry}
             setSelectedCountry={setSelectedCountry}
           />
-          <MainTextInput
-            style={styles.mobileNumber}
-            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-            value={mobileNumber}
-            placeholder="Mobile Number"
-            onChangeText={text => setMobileNumber(text)}
-          />
+          <View>
+            <Controller
+              control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <MainTextInput
+                  style={styles.mobileNumber}
+                  placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+                  placeholder="Mobile Number"
+                  keyboardType="number-pad"
+                  autoComplete="tel"
+                  autoFocus
+                  maxLength={9}
+                  value={value}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                />
+              )}
+              name="mobileNumber"
+            />
+            <ErrorMessage message={errors.mobileNumber?.message} />
+          </View>
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <Button
-          onPress={() => {
-            navigation.push('ValidateOTP');
-          }}
-          title="Next"
-        />
+        <Button onPress={handleSubmit(onSubmit)} title="Next" />
       </View>
     </View>
   );
