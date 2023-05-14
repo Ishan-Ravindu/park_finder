@@ -3,6 +3,7 @@ import AuthStack from './src/navigation/AuthStack';
 import {useEffect, useState} from 'react';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import Home from './src/screen/Home';
+import {RootStackParamList} from './src/navigation/types';
 
 function App(): JSX.Element | null {
   const [initializing, setInitializing] = useState(true);
@@ -20,21 +21,23 @@ function App(): JSX.Element | null {
 
   if (initializing) return null;
 
-  if (!user) {
+  if (!user || !user.displayName || !user.photoURL) {
+    let initialRouteName: keyof RootStackParamList = 'Welcome';
+    if (user && !user?.displayName) {
+      initialRouteName = 'GetUserDetails';
+    }
+    if (user && user?.displayName && !user?.photoURL) {
+      initialRouteName = 'SetUserAvatar';
+    }
     return (
       <>
         <StatusBar backgroundColor="#000000" />
-        <AuthStack />
+        <AuthStack initialRouteName={initialRouteName} />
       </>
     );
   }
 
-  return (
-    <>
-      <StatusBar backgroundColor="#000000" />
-      <Home />
-    </>
-  );
+  return <Home />;
 }
 
 export default App;
