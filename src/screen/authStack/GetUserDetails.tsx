@@ -7,34 +7,86 @@ import {
 } from '../../styles/colors';
 import Button from '../../components/Button';
 import {GetUserDetailsStackProps} from '../../navigation/types';
+import {yupResolver} from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import {Controller, useForm} from 'react-hook-form';
+import ErrorMessage from '../../components/ErrorMessage';
+import {firebase} from '@react-native-firebase/auth';
+
+const schema = yup.object({
+  firstName: yup.string().required('First name is required'),
+  lastName: yup.string().required('Last name is required'),
+});
+
+type FormData = yup.InferType<typeof schema>;
 
 const GetUserDetails: React.FC<GetUserDetailsStackProps> = ({
   navigation,
 }: GetUserDetailsStackProps) => {
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+    },
+  });
+
+  const onSubmit = async (data: FormData) => {
+    const update = {
+      displayName: `${data.firstName} ${data.lastName}`,
+    };
+    try {
+      await firebase.auth().currentUser?.updateProfile(update);
+      navigation.navigate('SetUserAvatar');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.mainContainer}>
         <Text style={styles.title}>What’s your name?</Text>
         <View style={styles.inputContainer}>
-          <MainTextInput
-            placeholder="First"
-            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-            style={styles.input}
+          <Controller
+            control={control}
+            render={({field: {onChange, onBlur, value}}) => (
+              <MainTextInput
+                placeholder="First"
+                placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+                style={styles.input}
+                value={value}
+                onBlur={onBlur}
+                onChangeText={onChange}
+              />
+            )}
+            name="firstName"
           />
-          <MainTextInput
-            placeholder="Last"
-            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-            style={styles.input}
+          <Controller
+            control={control}
+            render={({field: {onChange, onBlur, value}}) => (
+              <MainTextInput
+                placeholder="Last"
+                placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+                style={styles.input}
+                value={value}
+                onBlur={onBlur}
+                onChangeText={onChange}
+              />
+            )}
+            name="lastName"
           />
         </View>
+        <ErrorMessage
+          message={errors.firstName?.message || errors.lastName?.message}
+        />
       </View>
       <View style={styles.buttonContainer}>
-        <Button
-          onPress={() => {
-            navigation.push('SetUserAvatar');
-          }}
-          title="Next"
-        />
+        <Button onPress={handleSubmit(onSubmit)} title="Next" />
       </View>
     </View>
   );
