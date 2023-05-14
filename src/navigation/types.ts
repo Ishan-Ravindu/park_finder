@@ -11,6 +11,7 @@ export type RootStackParamList = {
     confirmationResult: FirebaseAuthTypes.ConfirmationResult;
   };
   SetUserAvatar: undefined;
+  Home: undefined;
 };
 
 export type WelcomeStackProps = {
@@ -31,4 +32,8 @@ export type RegisterMobileNumberStackProps = {
 
 export type GetUserDetailsStackProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'GetUserDetails'>;
+};
+
+export type SetUserAvatarStackProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList, 'SetUserAvatar'>;
 };

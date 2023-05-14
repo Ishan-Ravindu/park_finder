@@ -5,19 +5,68 @@ import {
   PRIMARY_TEXT_COLOR,
 } from '../../styles/colors';
 import Button from '../../components/Button';
+import {
+  launchImageLibrary,
+  ImagePickerResponse,
+} from 'react-native-image-picker';
+import storage from '@react-native-firebase/storage';
+import {firebase} from '@react-native-firebase/auth';
+import React, {useState} from 'react';
+import {SetUserAvatarStackProps} from '../../navigation/types';
 
-const SetUserAvatar = () => {
+const SetUserAvatar: React.FC<SetUserAvatarStackProps> = ({navigation}) => {
+  const [pickedImage, setPickedImage] = useState<ImagePickerResponse | null>(
+    null,
+  );
+
+  const handleAvatarPress = async () => {
+    const result = await launchImageLibrary({
+      mediaType: 'photo',
+      selectionLimit: 1,
+    });
+    setPickedImage(result);
+  };
+
+  const handlePress = () => {
+    if (pickedImage && pickedImage.assets) {
+      const userId = firebase.auth().currentUser?.uid;
+      const reference = storage().ref(`${userId}/avatar.jpg`);
+      const pathToFile = pickedImage.assets[0].uri;
+
+      if (pathToFile) {
+        const task = reference.putFile(pathToFile);
+
+        task.on('state_changed', taskSnapshot => {
+          console.log(
+            `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
+          );
+        });
+
+        task.then(async () => {
+          console.log('Image uploaded to the bucket!');
+          const url = await reference.getDownloadURL();
+          try {
+            await firebase.auth().currentUser?.updateProfile({photoURL: url});
+            navigation.push('Home');
+          } catch (error) {
+            console.log(error);
+          }
+        });
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.mainContainer}>
-        <Avatar />
+        <Avatar handleAvatarPress={handleAvatarPress} />
         <Text style={styles.text}>
-          By tapping the arrow below, you agree to ParkFinder’s Terms of Use and
-          acknowledge that you have read the Privacy Policy
+          By tapping the button below, you agree to ParkFinder’s Terms of Use
+          and acknowledge that you have read the Privacy Policy
         </Text>
       </View>
       <View style={styles.buttonContainer}>
-        <Button title="Next" />
+        <Button title="Next" onPress={handlePress} />
       </View>
     </View>
   );

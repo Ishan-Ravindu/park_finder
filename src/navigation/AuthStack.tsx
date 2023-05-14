@@ -10,6 +10,7 @@ import {
   PRIMARY_BACKGROUND_COLOR,
 } from '../styles/colors';
 import {RootStackParamList} from './types';
+import Home from '../screen/Home';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -45,6 +46,7 @@ const AuthStack = ({initialRouteName}: props) => {
         />
         <Stack.Screen name="ValidateOTP" component={ValidateOTP} />
         <Stack.Screen name="SetUserAvatar" component={SetUserAvatar} />
+        <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   );
