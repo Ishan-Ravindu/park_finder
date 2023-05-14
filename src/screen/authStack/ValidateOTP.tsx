@@ -15,7 +15,7 @@ const ValidateOTP: React.FC<ValidateOTPStackProps> = ({
 }: ValidateOTPStackProps) => {
   return (
     <View style={styles.container}>
-      <View style={styles.maincontainer}>
+      <View style={styles.mainContainer}>
         <Text style={styles.title}>
           Enter the 4-digit code sent to you at{'  '}
           <Text style={styles.mobileNumber}>+94 758964855</Text>
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 18,
   },
-  maincontainer: {
+  mainContainer: {
     flex: 4,
     paddingHorizontal: 20,
   },
