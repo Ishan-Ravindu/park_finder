@@ -1,4 +1,3 @@
-import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
@@ -10,7 +9,6 @@ export type RootStackParamList = {
     mobileNumber: string;
   };
   SetUserAvatar: undefined;
-  Home: undefined;
 };
 
 export type WelcomeStackProps = {

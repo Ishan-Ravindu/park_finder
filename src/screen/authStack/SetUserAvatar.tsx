@@ -13,12 +13,15 @@ import storage from '@react-native-firebase/storage';
 import {firebase} from '@react-native-firebase/auth';
 import React, {useState} from 'react';
 import {SetUserAvatarStackProps} from '../../navigation/types';
+import auth from '@react-native-firebase/auth';
+import useStore from '../../zustand/store';
 
 const SetUserAvatar: React.FC<SetUserAvatarStackProps> = ({navigation}) => {
   const [pickedImage, setPickedImage] = useState<ImagePickerResponse | null>(
     null,
   );
   const [isLording, setIsLording] = useState(false);
+  const setUser = useStore(state => state.setUser);
 
   const handleAvatarPress = async () => {
     const result = await launchImageLibrary({
@@ -49,7 +52,12 @@ const SetUserAvatar: React.FC<SetUserAvatarStackProps> = ({navigation}) => {
           const url = await reference.getDownloadURL();
           try {
             await firebase.auth().currentUser?.updateProfile({photoURL: url});
-            navigation.push('Home');
+            //update user in zustand to re-render the app and redirect to home
+            auth().onAuthStateChanged(user => {
+              if (user) {
+                setUser(user);
+              }
+            });
             setIsLording(false);
           } catch (error) {
             console.log(error);

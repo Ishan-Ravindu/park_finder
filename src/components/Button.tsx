@@ -1,4 +1,4 @@
-import {StyleSheet, Pressable, Text} from 'react-native';
+import {StyleSheet, Pressable, Text, ActivityIndicator} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   DISABLE_BACKGROUND_COLOR,
@@ -32,10 +32,12 @@ const Button: React.FC<props> = ({
 }) => {
   return (
     <Pressable {...other}>
-      <LinearGradient
-        style={style.button}
-        colors={disabled ? disableGradientColors : gradientColors}>
-        <Text style={style.text}>{title}</Text>
+      <LinearGradient style={style.button} colors={gradientColors}>
+        {disabled ? (
+          <ActivityIndicator size="large" color={PRIMARY_TEXT_COLOR} />
+        ) : (
+          <Text style={style.text}>{title}</Text>
+        )}
         {icon}
       </LinearGradient>
     </Pressable>
