@@ -13,6 +13,7 @@ import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {Controller, useForm} from 'react-hook-form';
 import ErrorMessage from '../../components/ErrorMessage';
+import useStore from '../../zustand/store';
 
 const schema = yup.object({
   otp: yup
@@ -39,18 +40,21 @@ const ValidateOTP: React.FC<ValidateOTPStackProps> = ({
     },
   });
 
+  const conformationResult = useStore(state => state.conformationResult);
   const mobileNumber = route.params.mobileNumber;
-  const confirmationResult = route.params.confirmationResult;
 
   const onSubmit = async (data: FormData) => {
     setIsLording(true);
-    try {
-      await confirmationResult.confirm(data.otp);
-      navigation.push('GetUserDetails');
-      setIsLording(false);
-    } catch (error) {
-      console.log(error);
-      setIsLording(false);
+    if (conformationResult) {
+      try {
+        await conformationResult.confirm(data.otp);
+
+        navigation.push('GetUserDetails');
+        setIsLording(false);
+      } catch (error) {
+        console.log(error);
+        setIsLording(false);
+      }
     }
   };
 

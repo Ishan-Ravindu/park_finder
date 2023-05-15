@@ -15,6 +15,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import ErrorMessage from '../../components/ErrorMessage';
 import auth from '@react-native-firebase/auth';
+import useStore from '../../zustand/store';
 
 const schema = yup.object({
   mobileNumber: yup
@@ -30,6 +31,7 @@ const RegisterMobileNumber: React.FC<RegisterMobileNumberStackProps> = ({
 }: RegisterMobileNumberStackProps) => {
   const [selectedCountry, setSelectedCountry] = useState(countries[0]);
   const [isLording, setIsLording] = useState(false);
+  const setConformationResult = useStore(state => state.setConformationResult);
 
   const {
     control,
@@ -46,10 +48,9 @@ const RegisterMobileNumber: React.FC<RegisterMobileNumberStackProps> = ({
     const fullMobileNumber = `${selectedCountry.mobile_code}${data.mobileNumber}`;
     try {
       const confirmation = await auth().signInWithPhoneNumber(fullMobileNumber);
-      console.log(confirmation);
+      setConformationResult(confirmation);
       navigation.push('ValidateOTP', {
         mobileNumber: fullMobileNumber,
-        confirmationResult: confirmation,
       });
       setIsLording(false);
     } catch (error) {

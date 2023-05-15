@@ -8,7 +8,6 @@ export type RootStackParamList = {
   RegisterMobileNumber: undefined;
   ValidateOTP: {
     mobileNumber: string;
-    confirmationResult: FirebaseAuthTypes.ConfirmationResult;
   };
   SetUserAvatar: undefined;
   Home: undefined;
