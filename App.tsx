@@ -5,6 +5,7 @@ import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import Home from './src/screen/Home';
 import {RootStackParamList} from './src/navigation/types';
 import useStore from './src/zustand/store';
+import {AlertNotificationRoot} from 'react-native-alert-notification';
 
 function App(): JSX.Element | null {
   const [initializing, setInitializing] = useState(true);
@@ -35,7 +36,9 @@ function App(): JSX.Element | null {
     return (
       <>
         <StatusBar backgroundColor="#000000" />
-        <AuthStack initialRouteName={initialRouteName} />
+        <AlertNotificationRoot theme="light">
+          <AuthStack initialRouteName={initialRouteName} />
+        </AlertNotificationRoot>
       </>
     );
   }

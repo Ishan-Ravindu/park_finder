@@ -13,6 +13,7 @@ import {Controller, useForm} from 'react-hook-form';
 import ErrorMessage from '../../components/ErrorMessage';
 import {firebase} from '@react-native-firebase/auth';
 import {useState} from 'react';
+import {ALERT_TYPE, Dialog} from 'react-native-alert-notification';
 
 const schema = yup.object({
   firstName: yup.string().required('First name is required'),
@@ -46,8 +47,15 @@ const GetUserDetails: React.FC<GetUserDetailsStackProps> = ({
       await firebase.auth().currentUser?.updateProfile(update);
       navigation.navigate('SetUserAvatar');
       setIsLording(false);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      Dialog.show({
+        type: ALERT_TYPE.DANGER,
+        title: error.code ? error.code : 'Error',
+        button: 'close',
+        textBody: error.message
+          ? error.message.replace(/\[[^\]]+\]/g, '')
+          : 'Something went wrong',
+      });
       setIsLording(false);
     }
   };

@@ -16,6 +16,7 @@ import * as yup from 'yup';
 import ErrorMessage from '../../components/ErrorMessage';
 import auth from '@react-native-firebase/auth';
 import useStore from '../../zustand/store';
+import {ALERT_TYPE, Dialog} from 'react-native-alert-notification';
 
 const schema = yup.object({
   mobileNumber: yup
@@ -53,8 +54,15 @@ const RegisterMobileNumber: React.FC<RegisterMobileNumberStackProps> = ({
         mobileNumber: fullMobileNumber,
       });
       setIsLording(false);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      Dialog.show({
+        type: ALERT_TYPE.DANGER,
+        title: error.code ? error.code : 'Error',
+        button: 'close',
+        textBody: error.message
+          ? error.message.replace(/\[[^\]]+\]/g, '')
+          : 'Something went wrong',
+      });
       setIsLording(false);
     }
   };

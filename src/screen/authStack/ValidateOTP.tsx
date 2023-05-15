@@ -14,6 +14,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {Controller, useForm} from 'react-hook-form';
 import ErrorMessage from '../../components/ErrorMessage';
 import useStore from '../../zustand/store';
+import {ALERT_TYPE, Dialog} from 'react-native-alert-notification';
 
 const schema = yup.object({
   otp: yup
@@ -51,8 +52,16 @@ const ValidateOTP: React.FC<ValidateOTPStackProps> = ({
 
         navigation.push('GetUserDetails');
         setIsLording(false);
-      } catch (error) {
-        console.log(error);
+      } catch (error: any) {
+        Dialog.show({
+          type: ALERT_TYPE.DANGER,
+          title: error.code ? error.code : 'Error',
+          button: 'close',
+          textBody: error.message
+            ? error.message.replace(/\[[^\]]+\]/g, '')
+            : 'Something went wrong',
+        });
+
         setIsLording(false);
       }
     }

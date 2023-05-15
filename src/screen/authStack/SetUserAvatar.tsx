@@ -15,6 +15,7 @@ import React, {useState} from 'react';
 import {SetUserAvatarStackProps} from '../../navigation/types';
 import auth from '@react-native-firebase/auth';
 import useStore from '../../zustand/store';
+import {ALERT_TYPE, Dialog} from 'react-native-alert-notification';
 
 const SetUserAvatar: React.FC<SetUserAvatarStackProps> = ({navigation}) => {
   const [pickedImage, setPickedImage] = useState<ImagePickerResponse | null>(
@@ -59,8 +60,15 @@ const SetUserAvatar: React.FC<SetUserAvatarStackProps> = ({navigation}) => {
               }
             });
             setIsLording(false);
-          } catch (error) {
-            console.log(error);
+          } catch (error: any) {
+            Dialog.show({
+              type: ALERT_TYPE.DANGER,
+              title: error.code ? error.code : 'Error',
+              button: 'close',
+              textBody: error.message
+                ? error.message.replace(/\[[^\]]+\]/g, '')
+                : 'Something went wrong',
+            });
             setIsLording(false);
           }
         });
