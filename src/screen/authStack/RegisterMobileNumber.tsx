@@ -29,6 +29,7 @@ const RegisterMobileNumber: React.FC<RegisterMobileNumberStackProps> = ({
   navigation,
 }: RegisterMobileNumberStackProps) => {
   const [selectedCountry, setSelectedCountry] = useState(countries[0]);
+  const [isLording, setIsLording] = useState(false);
 
   const {
     control,
@@ -41,6 +42,7 @@ const RegisterMobileNumber: React.FC<RegisterMobileNumberStackProps> = ({
     },
   });
   const onSubmit = async (data: FormData) => {
+    setIsLording(true);
     const fullMobileNumber = `${selectedCountry.mobile_code}${data.mobileNumber}`;
     try {
       const confirmation = await auth().signInWithPhoneNumber(fullMobileNumber);
@@ -49,8 +51,10 @@ const RegisterMobileNumber: React.FC<RegisterMobileNumberStackProps> = ({
         mobileNumber: fullMobileNumber,
         confirmationResult: confirmation,
       });
+      setIsLording(false);
     } catch (error) {
       console.log(error);
+      setIsLording(false);
     }
   };
 
@@ -87,7 +91,11 @@ const RegisterMobileNumber: React.FC<RegisterMobileNumberStackProps> = ({
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <Button onPress={handleSubmit(onSubmit)} title="Next" />
+        <Button
+          disabled={isLording}
+          onPress={handleSubmit(onSubmit)}
+          title="Next"
+        />
       </View>
     </View>
   );

@@ -13,7 +13,6 @@ import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {Controller, useForm} from 'react-hook-form';
 import ErrorMessage from '../../components/ErrorMessage';
-import {err} from 'react-native-svg/lib/typescript/xml';
 
 const schema = yup.object({
   otp: yup
@@ -28,6 +27,7 @@ const ValidateOTP: React.FC<ValidateOTPStackProps> = ({
   route,
   navigation,
 }: ValidateOTPStackProps) => {
+  const [isLording, setIsLording] = React.useState(false);
   const {
     control,
     handleSubmit,
@@ -43,11 +43,14 @@ const ValidateOTP: React.FC<ValidateOTPStackProps> = ({
   const confirmationResult = route.params.confirmationResult;
 
   const onSubmit = async (data: FormData) => {
+    setIsLording(true);
     try {
       await confirmationResult.confirm(data.otp);
       navigation.push('GetUserDetails');
+      setIsLording(false);
     } catch (error) {
       console.log(error);
+      setIsLording(false);
     }
   };
 
@@ -82,7 +85,11 @@ const ValidateOTP: React.FC<ValidateOTPStackProps> = ({
         <Text style={styles.resend}>Resend Code</Text>
       </View>
       <View style={styles.buttonContainer}>
-        <Button onPress={handleSubmit(onSubmit)} title="Next" />
+        <Button
+          disabled={isLording}
+          onPress={handleSubmit(onSubmit)}
+          title="Next"
+        />
       </View>
     </View>
   );

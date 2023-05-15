@@ -18,6 +18,7 @@ const SetUserAvatar: React.FC<SetUserAvatarStackProps> = ({navigation}) => {
   const [pickedImage, setPickedImage] = useState<ImagePickerResponse | null>(
     null,
   );
+  const [isLording, setIsLording] = useState(false);
 
   const handleAvatarPress = async () => {
     const result = await launchImageLibrary({
@@ -28,6 +29,7 @@ const SetUserAvatar: React.FC<SetUserAvatarStackProps> = ({navigation}) => {
   };
 
   const handlePress = () => {
+    setIsLording(true);
     if (pickedImage && pickedImage.assets) {
       const userId = firebase.auth().currentUser?.uid;
       const reference = storage().ref(`${userId}/avatar.jpg`);
@@ -48,8 +50,10 @@ const SetUserAvatar: React.FC<SetUserAvatarStackProps> = ({navigation}) => {
           try {
             await firebase.auth().currentUser?.updateProfile({photoURL: url});
             navigation.push('Home');
+            setIsLording(false);
           } catch (error) {
             console.log(error);
+            setIsLording(false);
           }
         });
       }
@@ -66,7 +70,7 @@ const SetUserAvatar: React.FC<SetUserAvatarStackProps> = ({navigation}) => {
         </Text>
       </View>
       <View style={styles.buttonContainer}>
-        <Button title="Next" onPress={handlePress} />
+        <Button disabled={isLording} title="Next" onPress={handlePress} />
       </View>
     </View>
   );

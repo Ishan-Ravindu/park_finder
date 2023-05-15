@@ -12,6 +12,7 @@ import * as yup from 'yup';
 import {Controller, useForm} from 'react-hook-form';
 import ErrorMessage from '../../components/ErrorMessage';
 import {firebase} from '@react-native-firebase/auth';
+import {useState} from 'react';
 
 const schema = yup.object({
   firstName: yup.string().required('First name is required'),
@@ -23,6 +24,7 @@ type FormData = yup.InferType<typeof schema>;
 const GetUserDetails: React.FC<GetUserDetailsStackProps> = ({
   navigation,
 }: GetUserDetailsStackProps) => {
+  const [isLording, setIsLording] = useState(false);
   const {
     control,
     handleSubmit,
@@ -36,14 +38,17 @@ const GetUserDetails: React.FC<GetUserDetailsStackProps> = ({
   });
 
   const onSubmit = async (data: FormData) => {
+    setIsLording(true);
     const update = {
       displayName: `${data.firstName} ${data.lastName}`,
     };
     try {
       await firebase.auth().currentUser?.updateProfile(update);
       navigation.navigate('SetUserAvatar');
+      setIsLording(false);
     } catch (error) {
       console.log(error);
+      setIsLording(false);
     }
   };
 
@@ -86,7 +91,11 @@ const GetUserDetails: React.FC<GetUserDetailsStackProps> = ({
         />
       </View>
       <View style={styles.buttonContainer}>
-        <Button onPress={handleSubmit(onSubmit)} title="Next" />
+        <Button
+          disabled={isLording}
+          onPress={handleSubmit(onSubmit)}
+          title="Next"
+        />
       </View>
     </View>
   );
