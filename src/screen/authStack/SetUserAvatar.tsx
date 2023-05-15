@@ -62,6 +62,7 @@ const SetUserAvatar: React.FC<SetUserAvatarStackProps> = ({navigation}) => {
             setIsLording(false);
           } catch (error: any) {
             Dialog.show({
+              closeOnOverlayTap: false,
               type: ALERT_TYPE.DANGER,
               title: error.code ? error.code : 'Error',
               button: 'close',

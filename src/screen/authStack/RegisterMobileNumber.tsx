@@ -56,6 +56,7 @@ const RegisterMobileNumber: React.FC<RegisterMobileNumberStackProps> = ({
       setIsLording(false);
     } catch (error: any) {
       Dialog.show({
+        closeOnOverlayTap: false,
         type: ALERT_TYPE.DANGER,
         title: error.code ? error.code : 'Error',
         button: 'close',
