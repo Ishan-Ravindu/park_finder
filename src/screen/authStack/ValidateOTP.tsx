@@ -15,6 +15,7 @@ import {Controller, useForm} from 'react-hook-form';
 import ErrorMessage from '../../components/ErrorMessage';
 import useStore from '../../zustand/store';
 import {ALERT_TYPE, Dialog} from 'react-native-alert-notification';
+import auth from '@react-native-firebase/auth';
 
 const schema = yup.object({
   otp: yup
@@ -42,6 +43,7 @@ const ValidateOTP: React.FC<ValidateOTPStackProps> = ({
   });
 
   const conformationResult = useStore(state => state.conformationResult);
+  const setConformationResult = useStore(state => state.setConformationResult);
   const mobileNumber = route.params.mobileNumber;
 
   const onSubmit = async (data: FormData) => {
@@ -49,7 +51,6 @@ const ValidateOTP: React.FC<ValidateOTPStackProps> = ({
     if (conformationResult) {
       try {
         await conformationResult.confirm(data.otp);
-
         navigation.push('GetUserDetails');
         setIsLording(false);
       } catch (error: any) {
@@ -65,6 +66,26 @@ const ValidateOTP: React.FC<ValidateOTPStackProps> = ({
 
         setIsLording(false);
       }
+    }
+  };
+
+  const handleResendCode = async () => {
+    setIsLording(true);
+    try {
+      const confirmation = await auth().signInWithPhoneNumber(mobileNumber);
+      setConformationResult(confirmation);
+      setIsLording(false);
+    } catch (error: any) {
+      Dialog.show({
+        closeOnOverlayTap: false,
+        type: ALERT_TYPE.DANGER,
+        title: error.code ? error.code : 'Error',
+        button: 'close',
+        textBody: error.message
+          ? error.message.replace(/\[[^\]]+\]/g, '')
+          : 'Something went wrong',
+      });
+      setIsLording(false);
     }
   };
 
@@ -96,7 +117,12 @@ const ValidateOTP: React.FC<ValidateOTPStackProps> = ({
           />
         </View>
         {errors.otp?.message && <ErrorMessage message={errors.otp?.message} />}
-        <Text style={styles.resend}>Resend Code</Text>
+        <Text
+          disabled={isLording}
+          onPress={handleResendCode}
+          style={isLording ? styles.resendDisable : styles.resend}>
+          Resend Code
+        </Text>
       </View>
       <View style={styles.buttonContainer}>
         <Button
@@ -134,6 +160,11 @@ const styles = StyleSheet.create({
   },
   resend: {
     color: HINT_TEXT_COLOR,
+    marginTop: 20,
+    fontSize: 18,
+  },
+  resendDisable: {
+    color: PLACEHOLDER_TEXT_COLOR,
     marginTop: 20,
     fontSize: 18,
   },
