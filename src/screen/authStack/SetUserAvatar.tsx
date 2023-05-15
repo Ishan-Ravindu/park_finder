@@ -32,47 +32,77 @@ const SetUserAvatar: React.FC<SetUserAvatarStackProps> = ({navigation}) => {
     setPickedImage(result);
   };
 
-  const handlePress = () => {
-    setIsLording(true);
-    if (pickedImage && pickedImage.assets) {
-      const userId = firebase.auth().currentUser?.uid;
-      const reference = storage().ref(`${userId}/avatar.jpg`);
-      const pathToFile = pickedImage.assets[0].uri;
-
-      if (pathToFile) {
-        const task = reference.putFile(pathToFile);
-
-        task.on('state_changed', taskSnapshot => {
-          console.log(
-            `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
-          );
+  const handlePress = async () => {
+    if (!pickedImage) {
+      //image picker result has no assets
+      setIsLording(true);
+      try {
+        await firebase.auth().currentUser?.updateProfile({
+          photoURL:
+            'https://firebasestorage.googleapis.com/v0/b/parkfinder-b40d1.appspot.com/o/noImageAvatar.png?alt=media&token=fae7d2d9-b16c-476c-a1f6-f7f1db7ef6e8',
         });
-
-        task.then(async () => {
-          console.log('Image uploaded to the bucket!');
-          const url = await reference.getDownloadURL();
-          try {
-            await firebase.auth().currentUser?.updateProfile({photoURL: url});
-            //update user in zustand to re-render the app and redirect to home
-            auth().onAuthStateChanged(user => {
-              if (user) {
-                setUser(user);
-              }
-            });
-            setIsLording(false);
-          } catch (error: any) {
-            Dialog.show({
-              closeOnOverlayTap: false,
-              type: ALERT_TYPE.DANGER,
-              title: error.code ? error.code : 'Error',
-              button: 'close',
-              textBody: error.message
-                ? error.message.replace(/\[[^\]]+\]/g, '')
-                : 'Something went wrong',
-            });
-            setIsLording(false);
+        //update user in zustand to re-render the app and redirect to home
+        auth().onAuthStateChanged(user => {
+          if (user) {
+            setUser(user);
           }
         });
+        setIsLording(false);
+      } catch (error: any) {
+        Dialog.show({
+          closeOnOverlayTap: false,
+          type: ALERT_TYPE.DANGER,
+          title: error.code ? error.code : 'Error',
+          button: 'close',
+          textBody: error.message
+            ? error.message.replace(/\[[^\]]+\]/g, '')
+            : 'Something went wrong',
+        });
+        setIsLording(false);
+      }
+    } else {
+      //image picker result has assets
+      setIsLording(true);
+      if (pickedImage && pickedImage.assets) {
+        const userId = firebase.auth().currentUser?.uid;
+        const reference = storage().ref(`${userId}/avatar.jpg`);
+        const pathToFile = pickedImage.assets[0].uri;
+
+        if (pathToFile) {
+          const task = reference.putFile('');
+
+          task.on('state_changed', taskSnapshot => {
+            console.log(
+              `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
+            );
+          });
+
+          task.then(async () => {
+            console.log('Image uploaded to the bucket!');
+            const url = await reference.getDownloadURL();
+            try {
+              await firebase.auth().currentUser?.updateProfile({photoURL: url});
+              //update user in zustand to re-render the app and redirect to home
+              auth().onAuthStateChanged(user => {
+                if (user) {
+                  setUser(user);
+                }
+              });
+              setIsLording(false);
+            } catch (error: any) {
+              Dialog.show({
+                closeOnOverlayTap: false,
+                type: ALERT_TYPE.DANGER,
+                title: error.code ? error.code : 'Error',
+                button: 'close',
+                textBody: error.message
+                  ? error.message.replace(/\[[^\]]+\]/g, '')
+                  : 'Something went wrong',
+              });
+              setIsLording(false);
+            }
+          });
+        }
       }
     }
   };
