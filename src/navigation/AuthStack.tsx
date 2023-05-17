@@ -13,11 +13,15 @@ import {RootStackParamList} from './types';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const AuthStack = () => {
+interface props {
+  initialRouteName: keyof RootStackParamList;
+}
+
+const AuthStack = ({initialRouteName}: props) => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Welcome"
+        initialRouteName={initialRouteName}
         screenOptions={{
           headerStyle: {
             backgroundColor: PRIMARY_BACKGROUND_COLOR,

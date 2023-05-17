@@ -9,46 +9,125 @@ import {
 } from '../../styles/colors';
 import Button from '../../components/Button';
 import {ValidateOTPStackProps} from '../../navigation/types';
+import * as yup from 'yup';
+import {yupResolver} from '@hookform/resolvers/yup';
+import {Controller, useForm} from 'react-hook-form';
+import ErrorMessage from '../../components/ErrorMessage';
+import useStore from '../../zustand/store';
+import {ALERT_TYPE, Dialog} from 'react-native-alert-notification';
+import auth from '@react-native-firebase/auth';
+
+const schema = yup.object({
+  otp: yup
+    .string()
+    .matches(/^[0-9]{6}$/, 'Enter six digit')
+    .required('OTP is required'),
+});
+
+type FormData = yup.InferType<typeof schema>;
 
 const ValidateOTP: React.FC<ValidateOTPStackProps> = ({
+  route,
   navigation,
 }: ValidateOTPStackProps) => {
+  const [isLording, setIsLording] = React.useState(false);
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      otp: '',
+    },
+  });
+
+  const conformationResult = useStore(state => state.conformationResult);
+  const setConformationResult = useStore(state => state.setConformationResult);
+  const mobileNumber = route.params.mobileNumber;
+
+  const onSubmit = async (data: FormData) => {
+    setIsLording(true);
+    if (conformationResult) {
+      try {
+        await conformationResult.confirm(data.otp);
+        navigation.push('GetUserDetails');
+        setIsLording(false);
+      } catch (error: any) {
+        Dialog.show({
+          closeOnOverlayTap: false,
+          type: ALERT_TYPE.DANGER,
+          title: error.code ? error.code : 'Error',
+          button: 'close',
+          textBody: error.message
+            ? error.message.replace(/\[[^\]]+\]/g, '')
+            : 'Something went wrong',
+        });
+
+        setIsLording(false);
+      }
+    }
+  };
+
+  const handleResendCode = async () => {
+    setIsLording(true);
+    try {
+      const confirmation = await auth().signInWithPhoneNumber(mobileNumber);
+      setConformationResult(confirmation);
+      setIsLording(false);
+    } catch (error: any) {
+      Dialog.show({
+        closeOnOverlayTap: false,
+        type: ALERT_TYPE.DANGER,
+        title: error.code ? error.code : 'Error',
+        button: 'close',
+        textBody: error.message
+          ? error.message.replace(/\[[^\]]+\]/g, '')
+          : 'Something went wrong',
+      });
+      setIsLording(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.maincontainer}>
+      <View style={styles.mainContainer}>
         <Text style={styles.title}>
-          Enter the 4-digit code sent to you at{'  '}
-          <Text style={styles.mobileNumber}>+94 758964855</Text>
+          Enter the 6-digit code sent to you at{'  '}
+          <Text style={styles.mobileNumber}>{mobileNumber}</Text>
         </Text>
         <View style={styles.inputContainer}>
-          <MainTextInput
-            placeholder="0"
-            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-            style={styles.input}
-          />
-          <MainTextInput
-            placeholder="0"
-            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-            style={styles.input}
-          />
-          <MainTextInput
-            placeholder="0"
-            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-            style={styles.input}
-          />
-          <MainTextInput
-            placeholder="0"
-            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-            style={styles.input}
+          <Controller
+            control={control}
+            render={({field: {onChange, onBlur, value}}) => (
+              <MainTextInput
+                placeholder="000000"
+                keyboardType="number-pad"
+                placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+                style={styles.input}
+                autoComplete="sms-otp"
+                autoFocus
+                maxLength={6}
+                value={value}
+                onBlur={onBlur}
+                onChangeText={onChange}
+              />
+            )}
+            name="otp"
           />
         </View>
-        <Text style={styles.resend}>Resend Code</Text>
+        {errors.otp?.message && <ErrorMessage message={errors.otp?.message} />}
+        <Text
+          disabled={isLording}
+          onPress={handleResendCode}
+          style={isLording ? styles.resendDisable : styles.resend}>
+          Resend Code
+        </Text>
       </View>
       <View style={styles.buttonContainer}>
         <Button
-          onPress={() => {
-            navigation.push('GetUserDetails');
-          }}
+          disabled={isLording}
+          onPress={handleSubmit(onSubmit)}
           title="Next"
         />
       </View>
@@ -75,7 +154,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   input: {
-    width: '15%',
+    width: '30%',
     textAlign: 'center',
     color: PRIMARY_TEXT_COLOR,
   },
@@ -84,7 +163,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 18,
   },
-  maincontainer: {
+  resendDisable: {
+    color: PLACEHOLDER_TEXT_COLOR,
+    marginTop: 20,
+    fontSize: 18,
+  },
+  mainContainer: {
     flex: 4,
     paddingHorizontal: 20,
   },

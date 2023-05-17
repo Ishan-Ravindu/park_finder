@@ -1,28 +1,43 @@
-import {StyleSheet, Pressable, Text} from 'react-native';
+import {StyleSheet, Pressable, Text, ActivityIndicator} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {PRIMARY_GRADIENT_COLOR, PRIMARY_TEXT_COLOR} from '../styles/colors';
+import {
+  DISABLE_BACKGROUND_COLOR,
+  PRIMARY_GRADIENT_COLOR,
+  PRIMARY_TEXT_COLOR,
+} from '../styles/colors';
 import React, {ReactNode} from 'react';
 
 interface props extends React.ComponentProps<typeof Pressable> {
   title: string;
   icon?: ReactNode;
   gradientColors?: (string | number)[];
+  disableGradientColors?: (string | number)[];
 }
 
 const Button: React.FC<props> = ({
   title,
+  disabled = false,
   icon,
   gradientColors = [
     PRIMARY_GRADIENT_COLOR.COLOR_1,
     PRIMARY_GRADIENT_COLOR.COLOR_2,
     PRIMARY_GRADIENT_COLOR.COLOR_3,
   ],
+  disableGradientColors = [
+    DISABLE_BACKGROUND_COLOR,
+    DISABLE_BACKGROUND_COLOR,
+    DISABLE_BACKGROUND_COLOR,
+  ],
   ...other
 }) => {
   return (
     <Pressable {...other}>
       <LinearGradient style={style.button} colors={gradientColors}>
-        <Text style={style.text}>{title}</Text>
+        {disabled ? (
+          <ActivityIndicator size="large" color={PRIMARY_TEXT_COLOR} />
+        ) : (
+          <Text style={style.text}>{title}</Text>
+        )}
         {icon}
       </LinearGradient>
     </Pressable>
