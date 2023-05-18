@@ -34,3 +34,12 @@ export type GetUserDetailsStackProps = {
 export type SetUserAvatarStackProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'SetUserAvatar'>;
 };
+
+export type HomeDrawerParamList = {
+  Home: undefined;
+  Booking: undefined;
+  Payment: undefined;
+  Setting: undefined;
+  Message: undefined;
+  SignOut: undefined;
+};
