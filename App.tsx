@@ -1,11 +1,12 @@
+import 'react-native-gesture-handler';
 import {StatusBar} from 'react-native';
 import AuthStack from './src/navigation/AuthStack';
 import {useEffect, useState} from 'react';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import Home from './src/screen/Home';
 import {RootStackParamList} from './src/navigation/types';
 import useStore from './src/zustand/store';
 import {AlertNotificationRoot} from 'react-native-alert-notification';
+import HomeDrawer from './src/navigation/HomeDrawer';
 
 function App(): JSX.Element | null {
   const [initializing, setInitializing] = useState(true);
@@ -22,7 +23,12 @@ function App(): JSX.Element | null {
   if (initializing) return null;
 
   if (user && user.displayName && user.photoURL) {
-    return <Home />;
+    return (
+      <>
+        <StatusBar backgroundColor="#000000" />
+        <HomeDrawer />
+      </>
+    );
   }
 
   if (!user || !user.displayName || !user.photoURL) {
@@ -43,7 +49,12 @@ function App(): JSX.Element | null {
     );
   }
 
-  return <Home />;
+  return (
+    <>
+      <StatusBar backgroundColor="#000000" />
+      <HomeDrawer />
+    </>
+  );
 }
 
 export default App;
