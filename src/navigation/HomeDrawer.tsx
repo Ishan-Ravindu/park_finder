@@ -7,13 +7,38 @@ import Booking from '../screen/homeDrawer/Booking';
 import Payment from '../screen/homeDrawer/Payment';
 import {NavigationContainer} from '@react-navigation/native';
 import SignOut from '../screen/homeDrawer/SignOut';
+import { DRAWER_BACKGROUND_COLOR, PRIMARY_BACKGROUND_COLOR, SECONDARY_BACKGROUND_COLOR, WHITE_COLOR } from '../styles/colors';
 
 const Drawer = createDrawerNavigator<HomeDrawerParamList>();
 
 const HomeDrawer = () => {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Navigator 
+      initialRouteName="Home" 
+      screenOptions={
+        {
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: DRAWER_BACKGROUND_COLOR,
+            
+          },
+          headerTintColor: WHITE_COLOR,
+          headerTitle: '',
+          drawerActiveBackgroundColor: SECONDARY_BACKGROUND_COLOR,
+          drawerStyle: {
+            backgroundColor: PRIMARY_BACKGROUND_COLOR,
+            
+          },
+          drawerLabelStyle: {
+            color: WHITE_COLOR,
+            fontSize: 20,            
+          },
+        }
+
+        
+      }
+      >
         <Drawer.Screen name="Home" component={Home} />
         <Drawer.Screen name="Message" component={Message} />
         <Drawer.Screen name="Setting" component={Setting} />
