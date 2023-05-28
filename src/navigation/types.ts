@@ -36,10 +36,19 @@ export type SetUserAvatarStackProps = {
 };
 
 export type HomeDrawerParamList = {
-  Home: undefined;
+  HomeStack: undefined;
   Booking: undefined;
   Payment: undefined;
   Setting: undefined;
   Message: undefined;
   SignOut: undefined;
+};
+
+export type HomeStackParamList = {
+  Home: undefined;
+  ParkMapView:undefined;
+}
+
+export type HomeStackProps = {
+  navigation: NativeStackNavigationProp<HomeStackParamList, 'Home'>;
 };

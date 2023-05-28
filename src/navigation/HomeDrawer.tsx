@@ -8,6 +8,7 @@ import Payment from '../screen/homeDrawer/Payment';
 import {NavigationContainer} from '@react-navigation/native';
 import SignOut from '../screen/homeDrawer/SignOut';
 import { DRAWER_BACKGROUND_COLOR, PRIMARY_BACKGROUND_COLOR, SECONDARY_BACKGROUND_COLOR, WHITE_COLOR } from '../styles/colors';
+import HomeStack from './HomeStack';
 
 const Drawer = createDrawerNavigator<HomeDrawerParamList>();
 
@@ -15,7 +16,7 @@ const HomeDrawer = () => {
   return (
     <NavigationContainer>
       <Drawer.Navigator 
-      initialRouteName="Home" 
+      initialRouteName="HomeStack" 
       screenOptions={
         {
           headerShown: true,
@@ -39,7 +40,7 @@ const HomeDrawer = () => {
         
       }
       >
-        <Drawer.Screen name="Home" component={Home} />
+        <Drawer.Screen name="HomeStack" component={HomeStack} />
         <Drawer.Screen name="Message" component={Message} />
         <Drawer.Screen name="Setting" component={Setting} />
         <Drawer.Screen name="Booking" component={Booking} />

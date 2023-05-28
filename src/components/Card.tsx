@@ -1,13 +1,16 @@
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet,Pressable} from 'react-native';
 import {
   BLACK_COLOR,
   SECONDARY_BACKGROUND_COLOR,
   WHITE_COLOR,
 } from '../styles/colors';
+import React from 'react';
 
-const Card = () => {
+interface Props extends React.ComponentProps<typeof Pressable> {}
+
+const Card:React.FC<Props> = ({...other}) => {
   return (
-    <View style={styles.container}>
+    <Pressable {...other} style={styles.container}>
       <View style={styles.leftContainer}>
         <Image
           source={{
@@ -34,7 +37,7 @@ const Card = () => {
           </View>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

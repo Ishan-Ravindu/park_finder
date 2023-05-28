@@ -4,10 +4,11 @@ import MiniButton from '../../components/MiniButton';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { HomeStackProps } from '../../navigation/types';
 
 
-const Home = () => {
+const Home:React.FC<HomeStackProps> = ({navigation}) => {
   const [locationStatus, setLocationStatus] = useState(false);
 
   useEffect(() => {
@@ -53,10 +54,10 @@ const Home = () => {
         <Button title='Search Parking'/>
       </View>
       <View style={styles.cardContainer}>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
+        <Card onPress={()=>navigation.navigate("ParkMapView")}/>
+        <Card onPress={()=>navigation.navigate("ParkMapView")} />
+        <Card onPress={()=>navigation.navigate("ParkMapView")}/>
+        <Card onPress={()=>navigation.navigate("ParkMapView")}/>
       </View>
       </View>
     </ScrollView>
