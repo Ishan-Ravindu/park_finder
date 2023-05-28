@@ -6,6 +6,13 @@ apply plugin: 'com.google.gms.google-services'
 
 import com.android.build.OutputFile
 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+def googleMapsApiKey = localProperties.getProperty('googleMapsApiKey')
+if (googleMapsApiKey == null) {
+   googleMapsApiKey = System.getenv("GOOGLE_MAPS_API_KEY_ENVIRONMENT_VARIABLE")
+}
+
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -103,6 +110,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [googleMapsApiKey: googleMapsApiKey]
     }
 
     splits {
