@@ -15,6 +15,7 @@ export const PRIMARY_ICON_COLOR = '#EDF6FF';
 export const DRAWER_BACKGROUND_COLOR = '#535AFF';
 
 export const WHITE_COLOR = '#FFFFFF';
+export const BLACK_COLOR = '#000000';
 
 export const PRIMARY_GRADIENT_COLOR = {
   COLOR_1: '#000000',
