@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View,Text, StyleSheet } from "react-native"
 import MapView, { Marker, PROVIDER_GOOGLE, Polyline } from 'react-native-maps';
 import MapViewDirections from "react-native-maps-directions";
 import {googleMapsApiKey} from "@env"
+import Geolocation from '@react-native-community/geolocation';
 
 const ParkMapView= ()=>{
-  const [googleMapsApiKeyState, setGoogleMapsApiKeyState] = useState<string>(googleMapsApiKey);
+  const [googleMapsApiKeyState] = useState<string>(googleMapsApiKey);
     const [coordinates] = useState([
         {
           latitude: 48.8587741,
@@ -15,7 +16,13 @@ const ParkMapView= ()=>{
           latitude: 48.8323785,
           longitude: 2.3361663,
         },
-      ]);  return (
+      ]);  
+      
+      useEffect(() => {
+        Geolocation.getCurrentPosition(info => console.log(info));
+      }, []);
+      
+      return (
         <View style={styles.container}>
           <MapView
             style={styles.maps}
