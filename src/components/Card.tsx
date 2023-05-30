@@ -6,9 +6,11 @@ import {
 } from '../styles/colors';
 import React from 'react';
 
-interface Props extends React.ComponentProps<typeof Pressable> {}
+interface Props extends React.ComponentProps<typeof Pressable> {
+  title: string;
+}
 
-const Card:React.FC<Props> = ({...other}) => {
+const Card:React.FC<Props> = ({title,...other}) => {
   return (
     <Pressable {...other} style={styles.container}>
       <View style={styles.leftContainer}>
@@ -20,7 +22,7 @@ const Card:React.FC<Props> = ({...other}) => {
         />
       </View>
       <View style={styles.rightContainer}>
-        <Text style={styles.titleText}>ABC parking center</Text>
+        <Text style={styles.titleText}>{title}</Text>
         {/* <Text></Text> for ratting  */}
         <View style={styles.detailsContainer}>
           <View style={styles.detailsSection}>
@@ -43,7 +45,8 @@ const Card:React.FC<Props> = ({...other}) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 5,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     backgroundColor: WHITE_COLOR,
     borderRadius: 10,
     flexDirection: 'row',

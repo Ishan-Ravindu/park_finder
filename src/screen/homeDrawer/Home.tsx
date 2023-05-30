@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View,ScrollView} from 'react-native';
+import {StyleSheet, Text, View,ScrollView, ActivityIndicator} from 'react-native';
 import { DRAWER_BACKGROUND_COLOR, PRIMARY_BACKGROUND_COLOR, SECONDARY_GRADIENT_COLOR, WHITE_COLOR } from '../../styles/colors';
 import MiniButton from '../../components/MiniButton';
 import Button from '../../components/Button';
@@ -6,10 +6,12 @@ import Card from '../../components/Card';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import React, { useEffect, useState } from 'react';
 import { HomeStackProps } from '../../navigation/types';
+import useParkingList from '../../hooks/useParkingCenter';
 
 
 const Home:React.FC<HomeStackProps> = ({navigation}) => {
   const [locationStatus, setLocationStatus] = useState(false);
+  const {parkingList,error,isLoading} = useParkingList();
 
   useEffect(() => {
     RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
@@ -37,12 +39,11 @@ const Home:React.FC<HomeStackProps> = ({navigation}) => {
         //  - ERR02 : If the popup has failed to open
         //  - ERR03 : Internal error
       });
+
   }, []);
   
-
   return (
     <ScrollView style={styles.container}>
-     
       {!locationStatus?<View style={styles.locationMessageContainer}>
         <Text style={styles.locationMessage}>
           To find your Parking location automatically, turn on location services
@@ -50,14 +51,18 @@ const Home:React.FC<HomeStackProps> = ({navigation}) => {
         <MiniButton title='Turn on location'/>
       </View>:null}
       <View>
-      <View style={styles.searchButtonContainer}>
-        <Button title='Search Parking'/>
-      </View>
       <View style={styles.cardContainer}>
-        <Card onPress={()=>navigation.navigate("ParkMapView")}/>
-        <Card onPress={()=>navigation.navigate("ParkMapView")} />
-        <Card onPress={()=>navigation.navigate("ParkMapView")}/>
-        <Card onPress={()=>navigation.navigate("ParkMapView")}/>
+        {isLoading?<ActivityIndicator />:(
+          <>
+          {error?<Text>{error}</Text>:(
+            <>
+            {parkingList.map((parking,index)=>(
+              <Card key={index} title={parking.name} onPress={()=>navigation.navigate("ParkMapView")} />
+            ))}
+            </>
+          )}
+          </>
+        )}
       </View>
       </View>
     </ScrollView>
@@ -79,13 +84,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 20,
   },
-  searchButtonContainer:{
-    justifyContent:'center',
-    alignItems:'center',
-    marginTop: 20,
-  },
   cardContainer:{
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
   }
 });
 
