@@ -1,6 +1,6 @@
-import create from "./http-service";
+import create from './http-service';
 
-export  interface ParkingCenter {
+export interface ParkingCenter {
   id: number;
   name: string;
   location: string;
@@ -8,6 +8,11 @@ export  interface ParkingCenter {
   longitude: number;
   open_status: 'open' | 'closed';
   image_url: string;
+}
+
+export interface ParkingCenterRequestBody {
+  latitude: number;
+  longitude: number;
 }
 
 export default create('/parking-center');

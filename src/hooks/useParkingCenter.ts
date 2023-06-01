@@ -2,12 +2,15 @@ import {useEffect, useState} from 'react';
 import {CanceledError} from '../services/api-client';
 import parkingCenterService, {
   ParkingCenter,
+  ParkingCenterRequestBody,
 } from '../services/parkingCenter-service';
+import useLocation from './useLocation';
 
 const useParkingList = () => {
   const [parkingList, setParkingList] = useState<ParkingCenter[]>([]);
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);
+  const {location} = useLocation();
 
   useEffect(() => {
     fetchParkingList();
@@ -15,7 +18,13 @@ const useParkingList = () => {
 
   const fetchParkingList = () => {
     setLoading(true);
-    const {request, cancel} = parkingCenterService.getAll<ParkingCenter>();
+    const {request, cancel} = parkingCenterService.getAll<
+      ParkingCenter,
+      ParkingCenterRequestBody
+    >({
+      latitude: location?.coords.latitude || 0,
+      longitude: location?.coords.longitude || 0,
+    });
     request
       .then(res => {
         setParkingList(res.data);
