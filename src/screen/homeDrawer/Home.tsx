@@ -52,7 +52,9 @@ const Home: React.FC<HomeStackProps> = ({navigation}) => {
                     <Card
                       key={index}
                       title={parking.name}
-                      onPress={() => navigation.navigate('ParkMapView')}
+                      onPress={() =>
+                        navigation.navigate('ParkMapView', parking)
+                      }
                     />
                   ))}
                 </>

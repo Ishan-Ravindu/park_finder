@@ -1,5 +1,6 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {ParkingCenter} from '../services/parkingCenter-service';
 
 export type RootStackParamList = {
   Welcome: undefined;
@@ -46,9 +47,13 @@ export type HomeDrawerParamList = {
 
 export type HomeStackParamList = {
   Home: undefined;
-  ParkMapView:undefined;
-}
+  ParkMapView: ParkingCenter;
+};
 
 export type HomeStackProps = {
   navigation: NativeStackNavigationProp<HomeStackParamList, 'Home'>;
+};
+
+export type ParkMapViewStackProps = {
+  route: RouteProp<HomeStackParamList, 'ParkMapView'>;
 };
